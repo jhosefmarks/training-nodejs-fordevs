@@ -19,6 +19,7 @@
   "dependencies": {
     "bcrypt": "^3.0.7",
     "express": "4.17.1",
+    "fast-glob": "^3.3.0",
     "mongodb": "^3.7.4",
     "validator": "^12.2.0"
   },
