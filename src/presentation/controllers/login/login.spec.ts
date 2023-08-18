@@ -15,4 +15,18 @@ describe('Login Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
+
+  test('Should return 400 if no password is provided', async () => {
+    const sut = new LoginController()
+    const httpRequest = {
+      body: {
+        email: 'any_email'
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+  })
 })
