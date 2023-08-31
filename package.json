@@ -8,7 +8,8 @@
   "repository": "github:jhosefmarks/training-nodejs-fordevs",
   "scripts": {
     "start": "node ./dist/main/server.js",
-    "debug": "node --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
+    "watch": "tsc -w",
     "build": "rimraf dist && tsc",
     "dev": "sucrase-node src/main/server.ts",
     "up": "npm run build && docker-compose up -d",
@@ -26,6 +27,7 @@
     "express": "4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.7.4",
+    "nodemon": "^2.0.22",
     "validator": "^12.2.0"
   },
   "devDependencies": {
