@@ -18,6 +18,9 @@
   "keywords": [],
   "author": "Jhosef Marks de Carvalho",
   "license": "MIT",
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
     "bcrypt": "^3.0.7",
     "express": "4.17.1",
