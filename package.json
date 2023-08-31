@@ -2,7 +2,10 @@
   "name": "training-nodejs-fordevs",
   "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "keywords": [],
+  "author": "Jhosef Marks de Carvalho",
+  "license": "MIT",
+  "repository": "github:jhosefmarks/training-nodejs-fordevs",
   "scripts": {
     "start": "node ./dist/main/server.js",
     "build": "rimraf dist && tsc",
@@ -16,12 +19,6 @@
     "test:staged": "npm t -- --findRelatedTests",
     "test:unit": "npm t -- --watch -c jest-unit-config.js",
     "test:verbose": "jest --passWithNoTests --runInBand —no-cache"
-  },
-  "keywords": [],
-  "author": "Jhosef Marks de Carvalho",
-  "license": "MIT",
-  "engines": {
-    "node": "12.x"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -56,5 +53,8 @@
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
     "typescript": "^3.7.4"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
