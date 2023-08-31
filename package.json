@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "node ./dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "dev": "sucrase-node src/main/server.ts",
     "prepare": "husky install",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:ci": "npm t -- --coverage",
@@ -19,7 +21,6 @@
   "dependencies": {
     "bcrypt": "^3.0.7",
     "express": "4.17.1",
-    "fast-glob": "^3.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.7.4",
     "validator": "^12.2.0"
@@ -45,6 +46,7 @@
     "husky": "^8.0.3",
     "jest": "^24.9.0",
     "lint-staged": "^13.2.2",
+    "rimraf": "^5.0.1",
     "sucrase": "^3.32.0",
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
