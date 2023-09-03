@@ -1,6 +1,7 @@
-import { Collection } from 'mongodb'
+import { type Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { LogMongoRepository } from './log-mongo-repository'
+import env from '../../../../main/config/env'
 
 const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository()
@@ -10,7 +11,7 @@ describe('Log Mongo Repository', () => {
   let errorCollection: Collection
 
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {
@@ -18,7 +19,7 @@ describe('Log Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    errorCollection = await MongoHelper.getCollection('errors')
+    errorCollection = MongoHelper.getCollection('errors')
     await errorCollection.deleteMany({})
   })
 

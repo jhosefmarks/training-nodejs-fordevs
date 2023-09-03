@@ -1,12 +1,13 @@
-import { Collection } from 'mongodb'
+import { type Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account-mongo-repository'
+import env from '../../../../main/config/env'
 
 let accountCollection: Collection
 
 describe('Account MongoDB Repository', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {
@@ -14,7 +15,7 @@ describe('Account MongoDB Repository', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -68,14 +69,14 @@ describe('Account MongoDB Repository', () => {
       email: 'any_email@mail.com',
       password: 'any_password'
     })
-    const fakeAccount = res.ops[0]
+    const fakeAccount = await accountCollection.findOne({ _id: res.insertedId })
 
-    expect(fakeAccount.accessToken).toBeFalsy()
+    expect(fakeAccount?.accessToken).toBeFalsy()
 
-    await sut.updateAccessToken(fakeAccount._id, 'any_token')
-    const account = await accountCollection.findOne({ _id: fakeAccount._id })
+    await sut.updateAccessToken(fakeAccount?._id.toHexString() || '', 'any_token')
+    const account = await accountCollection.findOne({ _id: fakeAccount?._id })
 
     expect(account).toBeTruthy()
-    expect(account.accessToken).toBe('any_token')
+    expect(account?.accessToken).toBe('any_token')
   })
 })
