@@ -39,7 +39,7 @@ const makeValidation = (): Validation => {
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountModel): Promise<AccountModel> {
-      return new Promise(resolve => { resolve(makeFakeAccount()) })
+      return Promise.resolve(makeFakeAccount())
     }
   }
 
@@ -59,13 +59,13 @@ describe('SignUp Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementation(async () => {
-      return new Promise((resolve, reject) => { reject(new Error()) })
+      return Promise.reject(new Error())
     })
 
     const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError(null))
+    expect(httpResponse.body).toEqual(new ServerError(''))
   })
 
   test('Should call AddAccount with correct values', async () => {
