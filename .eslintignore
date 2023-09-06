@@ -1,6 +1,6 @@
-.history/
-node_modules/
-data/
-dist/
-coverage/
-requirements/
+./.history
+./node_modules
+./data
+./dist
+./coverage
+./requirements
