@@ -23,7 +23,7 @@ const makeFakeAccountData = (): AddAccountModel => ({
 const makeHasher = (): Hasher => {
   class HasherStub implements Hasher {
     async hash (value: string): Promise<string> {
-      return new Promise(resolve => resolve('hashed_password'))
+      return Promise.resolve('hashed_password')
     }
   }
 
@@ -35,7 +35,7 @@ const makeAddAccountReporitory = (): AddAccountReporitory => {
     async add (accountData: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = makeFakeAccount()
 
-      return new Promise(resolve => resolve(fakeAccount))
+      return Promise.resolve(fakeAccount)
     }
   }
 
@@ -63,7 +63,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('Should throw if Hasher throws', async () => {
     const { sut, hasherStub } = makeSut()
-    jest.spyOn(hasherStub, 'hash').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(hasherStub, 'hash').mockRejectedValueOnce(new Error())
     const accountData: AddAccountModel = makeFakeAccountData()
 
     const promise = sut.add(accountData)
@@ -87,7 +87,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('Should throw if AddAccountReporitory throws', async () => {
     const { sut, addAccountReporitoryStub } = makeSut()
-    jest.spyOn(addAccountReporitoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(addAccountReporitoryStub, 'add').mockRejectedValueOnce(new Error())
     const accountData: AddAccountModel = makeFakeAccountData()
 
     const promise = sut.add(accountData)
