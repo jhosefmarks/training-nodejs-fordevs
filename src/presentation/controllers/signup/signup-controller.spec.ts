@@ -10,7 +10,7 @@ import {
   AuthenticationModel
 } from './signup-controller-protocols'
 
-import { MissingParamError, ServerError } from '../../errors'
+import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
 
 interface SutTypes {
   sut: SignUpController
@@ -78,9 +78,7 @@ const makeSut = (): SutTypes => {
 describe('SignUp Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    jest.spyOn(addAccountStub, 'add').mockImplementation(async () => {
-      return Promise.reject(new Error())
-    })
+    jest.spyOn(addAccountStub, 'add').mockImplementation(async () => Promise.reject(new Error()))
 
     const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
 
@@ -99,6 +97,16 @@ describe('SignUp Controller', () => {
       email: 'any_email@mail.com',
       password: 'any_password'
     })
+  })
+
+  test('Should return 403 if AddAccount returns null', async () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockResolvedValue(null)
+
+    const httpResponse: HttpResponse = await sut.handle(makeFakeRequest())
+
+    expect(httpResponse.statusCode).toBe(403)
+    expect(httpResponse.body).toEqual(new EmailInUseError())
   })
 
   test('Should return 200 if valid data is provided', async () => {
