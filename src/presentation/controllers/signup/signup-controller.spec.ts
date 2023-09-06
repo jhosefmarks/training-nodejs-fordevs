@@ -1,6 +1,14 @@
 import { SignUpController } from './signup-controller'
-
-import { HttpResponse, HttpRequest, AccountModel, AddAccount, AddAccountModel, Validation } from './signup-controller-protocols'
+import {
+  HttpResponse,
+  HttpRequest,
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  Validation,
+  Authentication,
+  AuthenticationModel
+} from './signup-controller-protocols'
 
 import { MissingParamError, ServerError } from '../../errors'
 
@@ -8,6 +16,7 @@ interface SutTypes {
   sut: SignUpController
   validationStub: Validation
   addAccountStub: AddAccount
+  authenticationStub: Authentication
 }
 
 const makeFakeAccount = (): AccountModel => ({
@@ -46,13 +55,24 @@ const makeAddAccount = (): AddAccount => {
   return new AddAccountStub()
 }
 
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
+    async auth (authentication: AuthenticationModel): Promise<string> {
+      return Promise.resolve('any_token')
+    }
+  }
+
+  return new AuthenticationStub()
+}
+
 const makeSut = (): SutTypes => {
   const validationStub = makeValidation()
   const addAccountStub = makeAddAccount()
+  const authenticationStub = makeAuthentication()
 
-  const sut = new SignUpController(validationStub, addAccountStub)
+  const sut = new SignUpController(validationStub, addAccountStub, authenticationStub)
 
-  return { sut, validationStub, addAccountStub }
+  return { sut, validationStub, addAccountStub, authenticationStub }
 }
 
 describe('SignUp Controller', () => {
@@ -116,5 +136,17 @@ describe('SignUp Controller', () => {
 
     expect(httpResponse.statusCode).toEqual(400)
     expect(httpResponse.body).toEqual(new MissingParamError('any_field'))
+  })
+
+  test('Should call Authentication with correct values', async () => {
+    const { sut, authenticationStub } = makeSut()
+    const authSpy = jest.spyOn(authenticationStub, 'auth')
+
+    await sut.handle(makeFakeRequest())
+
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password'
+    })
   })
 })
