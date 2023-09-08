@@ -22,6 +22,9 @@
       ],
       "@presentation/*": [
         "presentation/*"
+      ],
+      "@validation/*": [
+        "validation/*"
       ]
     }
   },

@@ -65,6 +65,7 @@
     "@domain": "dist/domain",
     "@infra": "dist/infra",
     "@main": "dist/main",
-    "@presentation": "dist/presentation"
+    "@presentation": "dist/presentation",
+    "@validation": "dist/validation"
   }
 }
