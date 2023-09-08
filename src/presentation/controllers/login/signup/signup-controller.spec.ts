@@ -10,7 +10,7 @@ import {
   AuthenticationModel
 } from './signup-controller-protocols'
 
-import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
+import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
 
 interface SutTypes {
   sut: SignUpController
