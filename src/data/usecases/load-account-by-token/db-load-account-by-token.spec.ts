@@ -19,7 +19,7 @@ const makeFakeAccount = (): AccountModel => ({
 
 const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
-    async decrypt (value: string): Promise<string> {
+    async decrypt (token: string): Promise<string> {
       return Promise.resolve('any_value')
     }
   }
