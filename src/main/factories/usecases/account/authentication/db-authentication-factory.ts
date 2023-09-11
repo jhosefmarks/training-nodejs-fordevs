@@ -4,7 +4,7 @@ import { AccountMongoRepository } from '@infra/db/mongodb/account/account-mongo-
 import { BcryptAdapter } from '@infra/cryptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '@infra/cryptography/jwt-adapter/jwt-adapter'
 
-import env from '../../../config/env'
+import env from '../../../../config/env'
 
 export const makeDbAuthentication = (): Authentication => {
   const salt = 12
