@@ -1,6 +1,6 @@
 import { LoadAccountByToken } from '@domain/usecases/load-account-by-token'
 import { AccountModel } from '@domain/models/account'
-import { AccessDeniedError } from '@presentation/errors'
+import { AccessDeniedError, ServerError } from '@presentation/errors'
 import { HttpRequest, HttpResponse } from '@presentation/protocols'
 
 import { AuthMiddleware } from './auth-middleware'
@@ -78,5 +78,15 @@ describe('Auth Middleware', () => {
 
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body).toEqual({ accountId: 'valid_id' })
+  })
+
+  test('Should return 500 if LoadAccountByToken throws', async () => {
+    const { sut, loadAccountByTokenStub } = makeSut()
+    jest.spyOn(loadAccountByTokenStub, 'load').mockRejectedValueOnce(new Error())
+
+    const httpResponse = await sut.handle(makeFakeRequest())
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError(''))
   })
 })
