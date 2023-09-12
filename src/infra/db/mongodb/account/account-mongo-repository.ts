@@ -7,7 +7,7 @@ import { UpdateAccessTokenRepository } from '@data/protocols/db/account/update-a
 import { AddAccountModel } from '@domain/usecases/add-account'
 import { AccountModel } from '@domain/models/account'
 
-import { MongoHelper } from '../helpers/mongo-helper'
+import { MongoHelper } from '@infra/db/mongodb/helpers/mongo-helper'
 
 export class AccountMongoRepository implements AddAccountReporitory, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {

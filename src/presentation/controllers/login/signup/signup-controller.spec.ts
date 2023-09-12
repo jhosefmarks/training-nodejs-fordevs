@@ -1,3 +1,4 @@
+import { EmailInUseError, MissingParamError, ServerError } from '@presentation/errors'
 import { SignUpController } from './signup-controller'
 import {
   HttpResponse,
@@ -9,8 +10,6 @@ import {
   Authentication,
   AuthenticationModel
 } from './signup-controller-protocols'
-
-import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
 
 type SutTypes = {
   sut: SignUpController
