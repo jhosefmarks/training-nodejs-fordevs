@@ -5,7 +5,7 @@ import { ServerError } from '@presentation/errors'
 import { AddSurvey, AddSurveyModel, HttpRequest, HttpResponse, Validation } from './add-survey-controller-protocols'
 import { AddSurveyController } from './add-survey-controller'
 
-interface sutTypes {
+type sutTypes = {
   sut: AddSurveyController
   validationStub: Validation
   addSurveyStub: AddSurvey

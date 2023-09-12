@@ -6,7 +6,7 @@ import { LoadSurveysRepository } from '../../protocols/db/survey/load-surveys-re
 
 import { DbLoadSurveys } from './db-load-surveys'
 
-interface SutTypes {
+type SutTypes = {
   sut: DbLoadSurveys
   loadSurveysRepositoryStub: LoadSurveysRepository
 }

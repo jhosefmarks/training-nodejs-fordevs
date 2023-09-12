@@ -12,7 +12,7 @@ import {
 
 import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController
   validationStub: Validation
   addAccountStub: AddAccount

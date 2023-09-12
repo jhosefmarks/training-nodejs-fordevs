@@ -3,7 +3,7 @@ import { MissingParamError, ServerError, UnauthorizedError } from '../../../erro
 
 import { LoginController } from './login-controller'
 
-interface sutTypes {
+type sutTypes = {
   sut: LoginController
   validationStub: Validation
   authenticationStub: Authentication

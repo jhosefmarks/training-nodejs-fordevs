@@ -2,7 +2,7 @@ import { AccessDeniedError, ServerError } from '@presentation/errors'
 import { AccountModel, HttpRequest, HttpResponse, LoadAccountByToken } from './auth-middleware-protocols'
 import { AuthMiddleware } from './auth-middleware'
 
-interface sutTypes {
+type sutTypes = {
   sut: AuthMiddleware
   loadAccountByTokenStub: LoadAccountByToken
 }
