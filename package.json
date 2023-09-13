@@ -21,7 +21,7 @@
     "test:integration": "npm t -- --watch -c jest-integration-config.js",
     "test:staged": "npm t -- --findRelatedTests",
     "test:unit": "npm t -- --watch -c jest-unit-config.js",
-    "test:verbose": "jest --passWithNoTests --runInBand —no-cache"
+    "test:verbose": "jest --passWithNoTests --runInBand"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
