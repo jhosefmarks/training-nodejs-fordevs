@@ -1,7 +1,14 @@
 import MockDate from 'mockdate'
 
 import { InvalidParamError, ServerError } from '@presentation/errors'
-import { HttpRequest, LoadSurveyById, SaveSurveyResult, SaveSurveyResultModel, SurveyModel, SurveyResultModel } from './save-survey-result-controller-protocols'
+import {
+  HttpRequest,
+  LoadSurveyById,
+  SaveSurveyResult,
+  SaveSurveyResultModel,
+  SurveyModel,
+  SurveyResultModel
+} from './save-survey-result-controller-protocols'
 import { SaveSurveyResultController } from './save-survey-result-controller'
 
 type SutTypes = {
@@ -142,5 +149,14 @@ describe('SaveSurveyResult Controller', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError(''))
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+
+    const httpResponse = await sut.handle(makeFakeRequest())
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual(makeFakeSurveyResult())
   })
 })
