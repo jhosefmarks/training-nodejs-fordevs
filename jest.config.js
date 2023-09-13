@@ -5,6 +5,7 @@ module.exports = {
     // '!<rootDir>/src/main/**',
     '!<rootDir>/src/**/*-protocols.ts',
     '!**/protocols/**',
+    '!**/*.d.ts',
     '!<rootDir>/src/main/server.ts',
     '!<rootDir>/src/main/config/env.ts'
     // '!**/test/**'

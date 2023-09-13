@@ -1,12 +1,13 @@
-import request from 'supertest'
+import { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
+import request from 'supertest'
 
 import { MongoHelper } from '@infra/db/mongodb/helpers/mongo-helper'
 import app from '@main/config/app'
 import env from '@main/config/env'
 
-let surveyCollection
-let accountCollection
+let surveyCollection: Collection
+let accountCollection: Collection
 
 const makeAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
