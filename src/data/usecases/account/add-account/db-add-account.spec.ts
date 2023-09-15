@@ -1,4 +1,4 @@
-import { AccountModel, AddAccountModel, AddAccountReporitory, Hasher, LoadAccountByEmailRepository } from './db-add-account-protocols'
+import { AccountModel, AddAccountParams, AddAccountReporitory, Hasher, LoadAccountByEmailRepository } from './db-add-account-protocols'
 import { DbAddAccount } from '@data/usecases/account/add-account/db-add-account'
 
 type SutTypes = {
@@ -15,7 +15,7 @@ const makeFakeAccount = (): AccountModel => ({
   password: 'hashed_password'
 })
 
-const makeFakeAccountData = (): AddAccountModel => ({
+const makeFakeAccountData = (): AddAccountParams => ({
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password'
@@ -33,7 +33,7 @@ const makeHasher = (): Hasher => {
 
 const makeAddAccountReporitory = (): AddAccountReporitory => {
   class AddAccountReporitoryStub implements AddAccountReporitory {
-    async add (accountData: AddAccountModel): Promise<AccountModel> {
+    async add (accountData: AddAccountParams): Promise<AccountModel> {
       const fakeAccount = makeFakeAccount()
 
       return Promise.resolve(fakeAccount)
@@ -66,7 +66,7 @@ describe('DbAddAccount Usecase', () => {
   test('Should call Hasher with correct password', async () => {
     const { sut, hasherStub } = makeSut()
     const hashSpy = jest.spyOn(hasherStub, 'hash')
-    const accountData: AddAccountModel = makeFakeAccountData()
+    const accountData: AddAccountParams = makeFakeAccountData()
 
     await sut.add(accountData)
 
@@ -76,7 +76,7 @@ describe('DbAddAccount Usecase', () => {
   test('Should throw if Hasher throws', async () => {
     const { sut, hasherStub } = makeSut()
     jest.spyOn(hasherStub, 'hash').mockRejectedValueOnce(new Error())
-    const accountData: AddAccountModel = makeFakeAccountData()
+    const accountData: AddAccountParams = makeFakeAccountData()
 
     const promise = sut.add(accountData)
 
@@ -86,7 +86,7 @@ describe('DbAddAccount Usecase', () => {
   test('Should call AddAccountReporitory with correct values', async () => {
     const { sut, addAccountReporitoryStub } = makeSut()
     const addSpy = jest.spyOn(addAccountReporitoryStub, 'add')
-    const accountData: AddAccountModel = makeFakeAccountData()
+    const accountData: AddAccountParams = makeFakeAccountData()
 
     await sut.add(accountData)
 
@@ -100,7 +100,7 @@ describe('DbAddAccount Usecase', () => {
   test('Should throw if AddAccountReporitory throws', async () => {
     const { sut, addAccountReporitoryStub } = makeSut()
     jest.spyOn(addAccountReporitoryStub, 'add').mockRejectedValueOnce(new Error())
-    const accountData: AddAccountModel = makeFakeAccountData()
+    const accountData: AddAccountParams = makeFakeAccountData()
 
     const promise = sut.add(accountData)
 
@@ -109,7 +109,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('Should return an account on sucess', async () => {
     const { sut } = makeSut()
-    const accountData: AddAccountModel = makeFakeAccountData()
+    const accountData: AddAccountParams = makeFakeAccountData()
 
     const account = await sut.add(accountData)
 

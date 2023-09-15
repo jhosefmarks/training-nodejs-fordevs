@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
 
-import { AddSurveyModel, AddSurveyReporitory } from './db-add-survey-protocols'
+import { AddSurveyParams, AddSurveyReporitory } from './db-add-survey-protocols'
 import { DbAddSurvey } from './db-add-survey'
 
 type SutTypes = {
@@ -8,7 +8,7 @@ type SutTypes = {
   addSurveyReporitoryStub: AddSurveyReporitory
 }
 
-const makeFakeSurveyData = (): AddSurveyModel => ({
+const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
   answers: [{
     image: 'any_image',
@@ -19,7 +19,7 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
 
 const makeAddSurveyReporitory = (): AddSurveyReporitory => {
   class AddSurveyReporitoryStub implements AddSurveyReporitory {
-    async add (surveyData: AddSurveyModel): Promise<void> {
+    async add (surveyData: AddSurveyParams): Promise<void> {
       return Promise.resolve()
     }
   }
@@ -46,7 +46,7 @@ describe('DBAddSurvey Usecase', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyReporitoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyReporitoryStub, 'add')
-    const surveyData: AddSurveyModel = makeFakeSurveyData()
+    const surveyData: AddSurveyParams = makeFakeSurveyData()
 
     await sut.add(surveyData)
 
@@ -56,7 +56,7 @@ describe('DBAddSurvey Usecase', () => {
   test('Should throw if AddSurveyRepository throws', async () => {
     const { sut, addSurveyReporitoryStub } = makeSut()
     jest.spyOn(addSurveyReporitoryStub, 'add').mockRejectedValueOnce(new Error())
-    const surveyData: AddSurveyModel = makeFakeSurveyData()
+    const surveyData: AddSurveyParams = makeFakeSurveyData()
 
     const promise = sut.add(surveyData)
 
