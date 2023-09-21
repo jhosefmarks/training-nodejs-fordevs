@@ -7,8 +7,8 @@ module.exports = {
     '!**/protocols/**',
     '!**/*.d.ts',
     '!<rootDir>/src/main/server.ts',
-    '!<rootDir>/src/main/config/env.ts'
-    // '!**/test/**'
+    '!<rootDir>/src/main/config/env.ts',
+    '!**/test/**'
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
