@@ -32,6 +32,10 @@ export class QueryBuilder {
     return this.addStep('$project', data)
   }
 
+  sort (data: object): QueryBuilder {
+    return this.addStep('$sort', data)
+  }
+
   build (): object[] {
     return this.query
   }
