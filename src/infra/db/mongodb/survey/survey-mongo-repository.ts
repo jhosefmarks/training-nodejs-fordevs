@@ -6,7 +6,7 @@ import { LoadSurveyByIdRepository } from '@data/usecases/survey/load-survey-by-i
 import { AddSurveyParams } from '@domain/usecases/survey/add-survey'
 import { SurveyModel } from '@domain/models/survey'
 
-import { MongoHelper } from '@infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@infra/db/mongodb/helpers'
 
 export class SurveyMongoRepository implements AddSurveyReporitory, LoadSurveysRepository, LoadSurveyByIdRepository {
   async add (surveyData: AddSurveyParams): Promise<void> {

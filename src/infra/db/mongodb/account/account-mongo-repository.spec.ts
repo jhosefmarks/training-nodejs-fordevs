@@ -4,7 +4,7 @@ import { mockAddAccountParams } from '@domain/test'
 
 import env from '@main/config/env'
 
-import { MongoHelper } from '@infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@infra/db/mongodb/helpers'
 import { AccountMongoRepository } from './account-mongo-repository'
 
 let accountCollection: Collection

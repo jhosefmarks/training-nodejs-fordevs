@@ -4,7 +4,7 @@ import { mockAddSurveyParams } from '@domain/test'
 
 import env from '@main/config/env'
 
-import { MongoHelper } from '@infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@infra/db/mongodb/helpers'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 
 let surveyCollection: Collection
