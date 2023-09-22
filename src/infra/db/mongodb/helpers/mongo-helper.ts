@@ -21,7 +21,7 @@ export const MongoHelper = {
   map (data: any): any {
     const { _id, ...collectionWithoutId } = data
 
-    return { ...collectionWithoutId, id: _id.toHexString() }
+    return _id ? { ...collectionWithoutId, id: _id.toHexString() } : collectionWithoutId
   },
 
   mapCollection (collection: any[]): any[] {
