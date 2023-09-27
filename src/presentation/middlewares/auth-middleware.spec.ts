@@ -18,7 +18,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel())
+      return mockAccountModel()
     }
   }
 

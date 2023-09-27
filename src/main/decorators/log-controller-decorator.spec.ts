@@ -33,7 +33,7 @@ const mockController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
       const httpResponse: HttpResponse = ok(mockAccountModel())
-      return Promise.resolve(httpResponse)
+      return httpResponse
     }
   }
   return new ControllerStub()
@@ -74,7 +74,7 @@ describe('LogController Decorator', () => {
   test('Should call LogErrorRepository with correct error if controller returns a server error', async () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut()
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
-    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(Promise.resolve(mockServerError()))
+    jest.spyOn(controllerStub, 'handle').mockResolvedValueOnce(mockServerError())
     const httpRequest = mockRequest()
 
     await sut.handle(httpRequest)

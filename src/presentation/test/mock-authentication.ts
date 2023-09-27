@@ -7,7 +7,7 @@ import { Authentication, AuthenticationParams } from '@domain/usecases/account/a
 export const mockAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth (authentication: AuthenticationParams): Promise<string> {
-      return Promise.resolve('any_token')
+      return 'any_token'
     }
   }
 
@@ -17,7 +17,7 @@ export const mockAuthentication = (): Authentication => {
 export const mockAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel> {
-      return Promise.resolve(mockAccountModel())
+      return mockAccountModel()
     }
   }
 
