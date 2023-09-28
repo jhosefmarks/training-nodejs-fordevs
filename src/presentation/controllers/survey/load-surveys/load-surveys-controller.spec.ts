@@ -4,13 +4,15 @@ import { mockSurveyModels } from '@domain/test'
 import { mockLoadSurveys } from '@presentation/test'
 
 import { ServerError } from '@presentation/errors'
-import { LoadSurveys } from './load-surveys-controller-protocols'
+import { HttpRequest, LoadSurveys } from './load-surveys-controller-protocols'
 import { LoadSurveysController } from './load-surveys-controller'
 
 type SutTypes = {
   sut: LoadSurveysController
   loadSurveysStub: LoadSurveys
 }
+
+const mockRequest = (): HttpRequest => ({ accountId: 'any_id' })
 
 const makeSut = (): SutTypes => {
   const loadSurveysStub = mockLoadSurveys()
@@ -28,19 +30,19 @@ describe('LoadSurveys Controller', () => {
     MockDate.reset()
   })
 
-  test('Should call LoadSurveys', async () => {
+  test('Should call LoadSurveys with correct value', async () => {
     const { sut, loadSurveysStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveysStub, 'load')
 
-    await sut.handle({})
+    await sut.handle(mockRequest())
 
-    expect(loadSpy).toHaveBeenCalled()
+    expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
   test('Should return 200 on success', async () => {
     const { sut } = makeSut()
 
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse.statusCode).toEqual(200)
     expect(httpResponse.body).toEqual(mockSurveyModels())
@@ -50,7 +52,7 @@ describe('LoadSurveys Controller', () => {
     const { sut, loadSurveysStub } = makeSut()
     jest.spyOn(loadSurveysStub, 'load').mockResolvedValueOnce([])
 
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse.statusCode).toEqual(204)
     expect(httpResponse.body).toBeNull()
@@ -60,7 +62,7 @@ describe('LoadSurveys Controller', () => {
     const { sut, loadSurveysStub } = makeSut()
     jest.spyOn(loadSurveysStub, 'load').mockRejectedValueOnce(new Error())
 
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError(''))
