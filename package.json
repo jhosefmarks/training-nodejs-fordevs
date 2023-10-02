@@ -17,7 +17,7 @@
     "down": "docker-compose down",
     "check": "npx npm-check -s -u",
     "prepare": "husky install",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:ci": "npm t -- --coverage",
     "test:integration": "npm t -- --watch -c jest-integration-config.js",
     "test:staged": "npm t -- --findRelatedTests",
