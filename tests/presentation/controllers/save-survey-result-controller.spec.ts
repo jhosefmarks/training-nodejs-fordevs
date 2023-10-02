@@ -7,7 +7,6 @@ import { LoadSurveyById, SaveSurveyResult } from '@domain/usecases'
 
 import { SaveSurveyResultController } from '@presentation/controllers'
 import { InvalidParamError, ServerError } from '@presentation/errors'
-import { HttpRequest } from '@presentation/protocols'
 
 type SutTypes = {
   sut: SaveSurveyResultController
@@ -15,14 +14,10 @@ type SutTypes = {
   saveSurveyResultStub: SaveSurveyResult
 }
 
-const mockRequest = (): HttpRequest => ({
-  params: {
-    surveyId: 'any_survey_id'
-  },
-  body: {
-    answer: 'any_answer'
-  },
-  accountId: 'any_account_id'
+const mockRequest = (): SaveSurveyResultController.Request => ({
+  accountId: 'any_account_id',
+  surveyId: 'any_survey_id',
+  answer: 'any_answer'
 })
 
 const makeSut = (): SutTypes => {
@@ -75,12 +70,9 @@ describe('SaveSurveyResult Controller', () => {
     const { sut } = makeSut()
 
     const httpResponse = await sut.handle({
-      params: {
-        surveyId: 'any_survey_id'
-      },
-      body: {
-        answer: 'wrong_answer'
-      }
+      accountId: 'any_account_id',
+      surveyId: 'any_survey_id',
+      answer: 'wrong_answer'
     })
 
     expect(httpResponse.statusCode).toBe(403)

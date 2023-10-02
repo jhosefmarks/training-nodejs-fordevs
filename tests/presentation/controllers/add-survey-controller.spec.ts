@@ -6,7 +6,7 @@ import { AddSurvey } from '@domain/usecases'
 
 import { ServerError } from '@presentation/errors'
 import { AddSurveyController } from '@presentation/controllers'
-import { HttpRequest, HttpResponse, Validation } from '@presentation/protocols'
+import { HttpResponse, Validation } from '@presentation/protocols'
 
 type sutTypes = {
   sut: AddSurveyController
@@ -14,15 +14,12 @@ type sutTypes = {
   addSurveyStub: AddSurvey
 }
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
-  }
+const mockRequest = (): AddSurveyController.Request => ({
+  question: 'any_question',
+  answers: [{
+    image: 'any_image',
+    answer: 'any_answer'
+  }]
 })
 
 const makeSut = (): sutTypes => {
@@ -45,11 +42,11 @@ describe('AddSurvey Controller', () => {
   test('Should call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpRequest = mockRequest()
+    const request = mockRequest()
 
-    await sut.handle(httpRequest)
+    await sut.handle(request)
 
-    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+    expect(validateSpy).toHaveBeenCalledWith(request)
   })
 
   test('Should return 400 if Validation returns an error', async () => {
@@ -65,11 +62,11 @@ describe('AddSurvey Controller', () => {
   test('Should call AddSurvey with correct values', async () => {
     const { sut, addSurveyStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyStub, 'add')
-    const httpRequest = mockRequest()
+    const request = mockRequest()
 
-    await sut.handle(httpRequest)
+    await sut.handle(request)
 
-    expect(addSpy).toHaveBeenCalledWith(httpRequest.body)
+    expect(addSpy).toHaveBeenCalledWith({ ...request, date: new Date() })
   })
 
   test('Should return 500 if AddSurvey throws', async () => {
@@ -84,9 +81,9 @@ describe('AddSurvey Controller', () => {
 
   test('Should return 204 on success', async () => {
     const { sut } = makeSut()
-    const httpRequest: HttpRequest = mockRequest()
+    const request = mockRequest()
 
-    const httpResponse: HttpResponse = await sut.handle(httpRequest)
+    const httpResponse: HttpResponse = await sut.handle(request)
 
     expect(httpResponse.statusCode).toBe(204)
     expect(httpResponse.body).toBeNull()

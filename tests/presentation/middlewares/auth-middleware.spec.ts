@@ -5,18 +5,14 @@ import { LoadAccountByToken } from '@domain/usecases'
 
 import { AccessDeniedError, ServerError } from '@presentation/errors'
 import { AuthMiddleware } from '@presentation/middlewares'
-import { HttpRequest, HttpResponse } from '@presentation/protocols'
+import { HttpResponse } from '@presentation/protocols'
 
 type sutTypes = {
   sut: AuthMiddleware
   loadAccountByTokenStub: LoadAccountByToken
 }
 
-const makeFakeRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': 'any_token'
-  }
-})
+const makeFakeRequest = (): AuthMiddleware.Request => ({ accessToken: 'any_token' })
 
 const makeLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
@@ -38,9 +34,9 @@ const makeSut = (role?: string): sutTypes => {
 describe('Auth Middleware', () => {
   test('Should return 403 if no x-access-token exists in headers', async () => {
     const { sut } = makeSut()
-    const httpRequest: HttpRequest = {}
+    const request = {}
 
-    const httpResponse: HttpResponse = await sut.handle(httpRequest)
+    const httpResponse: HttpResponse = await sut.handle(request)
 
     expect(httpResponse.statusCode).toBe(403)
     expect(httpResponse.body).toEqual(new AccessDeniedError())
@@ -50,9 +46,9 @@ describe('Auth Middleware', () => {
     const role = 'any_role'
     const { sut, loadAccountByTokenStub } = makeSut(role)
     const loadSpy = jest.spyOn(loadAccountByTokenStub, 'load')
-    const httpRequest = makeFakeRequest()
+    const request = makeFakeRequest()
 
-    await sut.handle(httpRequest)
+    await sut.handle(request)
 
     expect(loadSpy).toHaveBeenCalledWith('any_token', role)
   })

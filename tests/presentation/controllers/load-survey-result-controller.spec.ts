@@ -6,13 +6,10 @@ import { mockSurveyResultModel } from '@tests/domain/mocks'
 import { LoadSurveyById, LoadSurveyResult } from '@domain/usecases'
 import { InvalidParamError, ServerError } from '@presentation/errors'
 import { LoadSurveyResultController } from '@presentation/controllers'
-import { HttpRequest } from '@presentation/protocols'
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadSurveyResultController.Request => ({
   accountId: 'any_account_id',
-  params: {
-    surveyId: 'any_survey_id'
-  }
+  surveyId: 'any_survey_id'
 })
 
 type SutTypes = {

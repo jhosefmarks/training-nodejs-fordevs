@@ -6,14 +6,13 @@ import { mockLoadSurveys } from '@tests/presentation/mocks'
 import { LoadSurveys } from '@domain/usecases'
 import { ServerError } from '@presentation/errors'
 import { LoadSurveysController } from '@presentation/controllers'
-import { HttpRequest } from '@presentation/protocols'
 
 type SutTypes = {
   sut: LoadSurveysController
   loadSurveysStub: LoadSurveys
 }
 
-const mockRequest = (): HttpRequest => ({ accountId: 'any_id' })
+const mockRequest = (): LoadSurveysController.Request => ({ accountId: 'any_id' })
 
 const makeSut = (): SutTypes => {
   const loadSurveysStub = mockLoadSurveys()
