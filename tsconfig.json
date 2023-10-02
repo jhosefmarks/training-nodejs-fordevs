@@ -5,7 +5,10 @@
     "target": "es2020",
     "esModuleInterop": true,
     "sourceMap": true,
-    "rootDir": "src",
+    "rootDirs": [
+      "src",
+      "tests"
+    ],
     "baseUrl": "src",
     "paths": {
       "@data/*": [
@@ -25,10 +28,14 @@
       ],
       "@validation/*": [
         "validation/*"
+      ],
+      "@tests/*": [
+        "../tests/*"
       ]
     }
   },
   "include": [
-    "src"
+    "src",
+    "tests"
   ]
 }

@@ -1,8 +1,7 @@
 import { Router } from 'express'
 
-import { adaptRoute } from '@main/adapters/express-route-adapter'
-import { makeLoadSurveyResultController } from '@main/factories/controllers/survey-result/load-survey-result/load-survey-result-controller-factory'
-import { makeSaveSurveyResultController } from '@main/factories/controllers/survey-result/save-survey-result/save-survey-result-controller-factory'
+import { adaptRoute } from '@main/adapters'
+import { makeLoadSurveyResultController, makeSaveSurveyResultController } from '@main/factories'
 import { auth } from '@main/middlewares/auth'
 
 export default (router: Router): void => {

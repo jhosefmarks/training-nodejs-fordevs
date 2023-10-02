@@ -1,14 +1,14 @@
 module.exports = {
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/tests'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    // '!<rootDir>/src/main/**',
-    '!<rootDir>/src/**/*-protocols.ts',
-    '!**/protocols/**',
-    '!**/*.d.ts',
-    '!<rootDir>/src/main/server.ts',
-    '!<rootDir>/src/main/config/env.ts',
-    '!**/test/**'
+    '!<rootDir>/src/main/**',
+    // '!<rootDir>/src/**/*-protocols.ts',
+    // '!**/protocols/**',
+    // '!**/*.d.ts',
+    // '!<rootDir>/src/main/server.ts',
+    // '!<rootDir>/src/main/config/env.ts',
+    // '!**/test/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
@@ -23,6 +23,7 @@ module.exports = {
     '@infra/(.*)': '<rootDir>/src/infra/$1',
     '@main/(.*)': '<rootDir>/src/main/$1',
     '@presentation/(.*)': '<rootDir>/src/presentation/$1',
-    '@validation/(.*)': '<rootDir>/src/validation/$1'
+    '@validation/(.*)': '<rootDir>/src/validation/$1',
+    '@tests/(.*)': '<rootDir>/tests/$1'
   }
 }
