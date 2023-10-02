@@ -1,9 +1,9 @@
 import { mockSurveyModel, mockSurveyResultModel } from '@tests/domain/mocks'
 
 import { SurveyResultModel } from '@domain/models/survey-result'
-import { LoadSurveyResult } from '@domain/usecases/survey-result/load-survey-result'
-import { SaveSurveyResult, SaveSurveyResultParams } from '@domain/usecases/survey-result/save-survey-result'
-import { LoadSurveyById } from '@domain/usecases/survey/load-survey-by-id'
+import { LoadSurveyResult } from '@domain/usecases/load-survey-result'
+import { SaveSurveyResult, SaveSurveyResultParams } from '@domain/usecases/save-survey-result'
+import { LoadSurveyById } from '@domain/usecases/load-survey-by-id'
 import { SurveyModel } from '@domain/models/survey'
 
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
