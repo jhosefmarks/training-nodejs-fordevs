@@ -11,6 +11,7 @@
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "watch": "tsc -w",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "build:watch": "rimraf dist && tsc -p tsconfig.build.json -w",
     "postbuild": "copyfiles -u 1 public/**/* dist/static",
     "dev": "sucrase-node src/main/server.ts",
     "up": "npm run build && docker-compose up",
@@ -22,7 +23,7 @@
     "test:integration": "npm t -- --watch -c jest-integration-config.js",
     "test:staged": "npm t -- --findRelatedTests",
     "test:unit": "npm t -- --watch -c jest-unit-config.js",
-    "test:verbose": "jest --passWithNoTests --runInBand"
+    "test:verbose": "jest --passWithNoTests --runInBand --no-cache"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
