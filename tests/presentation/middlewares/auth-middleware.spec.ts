@@ -1,6 +1,5 @@
-import { mockAccountModel } from '@tests/domain/mocks'
+import { makeLoadAccountByToken } from '@tests/presentation/mocks'
 
-import { AccountModel } from '@domain/models'
 import { LoadAccountByToken } from '@domain/usecases'
 
 import { AccessDeniedError, ServerError } from '@presentation/errors'
@@ -13,16 +12,6 @@ type sutTypes = {
 }
 
 const makeFakeRequest = (): AuthMiddleware.Request => ({ accessToken: 'any_token' })
-
-const makeLoadAccountByToken = (): LoadAccountByToken => {
-  class LoadAccountByTokenStub implements LoadAccountByToken {
-    async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return mockAccountModel()
-    }
-  }
-
-  return new LoadAccountByTokenStub()
-}
 
 const makeSut = (role?: string): sutTypes => {
   const loadAccountByTokenStub = makeLoadAccountByToken()
