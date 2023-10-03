@@ -27,7 +27,7 @@ implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessToken
     return account && MongoHelper.map(account)
   }
 
-  async loadByToken (token: string, role?: string): Promise<AccountModel> {
+  async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result> {
     const accountCollection = MongoHelper.getCollection('accounts')
     const account = await accountCollection.findOne(role ? { accessToken: token, role } : { accessToken: token })
 

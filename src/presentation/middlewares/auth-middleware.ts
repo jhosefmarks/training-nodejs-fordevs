@@ -1,4 +1,3 @@
-import { AccountModel } from '@domain/models'
 import { LoadAccountByToken } from '@domain/usecases'
 
 import { AccessDeniedError } from '@presentation/errors'
@@ -16,7 +15,7 @@ export class AuthMiddleware implements Middleware {
       const { accessToken } = request
 
       if (accessToken) {
-        const account: AccountModel = await this.loadAccountByToken.load(accessToken, this.role)
+        const account = await this.loadAccountByToken.load(accessToken, this.role)
 
         if (account) {
           return ok({ accountId: account.id })
