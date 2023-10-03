@@ -9,8 +9,8 @@ import {
   AddAccountRepository
 } from '@data/protocols'
 
-export const mockAddAccountReporitory = (): AddAccountRepository => {
-  class AddAccountReporitoryStub implements AddAccountRepository {
+export const mockAddAccountRepository = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
     async add (accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
       const fakeAccount = mockAccountModel()
 
@@ -18,7 +18,7 @@ export const mockAddAccountReporitory = (): AddAccountRepository => {
     }
   }
 
-  return new AddAccountReporitoryStub()
+  return new AddAccountRepositoryStub()
 }
 
 export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {

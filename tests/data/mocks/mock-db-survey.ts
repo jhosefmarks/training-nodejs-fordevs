@@ -1,16 +1,15 @@
 import { mockSurveyModels, mockSurveyModel } from '@tests/domain/mocks'
 
-import { AddSurveyParams } from '@domain/usecases'
 import { SurveyModel } from '@domain/models'
 
-import { AddSurveyReporitory , LoadSurveyByIdRepository , LoadSurveysRepository } from '@data/protocols'
+import { AddSurveyRepository , LoadSurveyByIdRepository , LoadSurveysRepository } from '@data/protocols'
 
-export const mockAddSurveyRepository = (): AddSurveyReporitory => {
-  class AddSurveyReporitoryStub implements AddSurveyReporitory {
-    async add (surveyData: AddSurveyParams): Promise<void> { }
+export const mockAddSurveyRepository = (): AddSurveyRepository => {
+  class AddSurveyRepositoryStub implements AddSurveyRepository {
+    async add (data: AddSurveyRepository.Params): Promise<void> { }
   }
 
-  return new AddSurveyReporitoryStub()
+  return new AddSurveyRepositoryStub()
 }
 
 export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {

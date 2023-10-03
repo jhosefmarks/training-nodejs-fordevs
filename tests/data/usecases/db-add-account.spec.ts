@@ -1,4 +1,4 @@
-import { mockAddAccountReporitory, mockHasher, mockLoadAccountByEmailRepository } from '@tests/data/mocks'
+import { mockAddAccountRepository, mockHasher, mockLoadAccountByEmailRepository } from '@tests/data/mocks'
 import { mockAccountModel, mockAddAccountParams } from '@tests/domain/mocks'
 
 import { AddAccountRepository, Hasher, LoadAccountByEmailRepository } from '@data/protocols'
@@ -7,18 +7,18 @@ import { DbAddAccount } from '@data/usecases'
 type SutTypes = {
   sut: DbAddAccount
   hasherStub: Hasher
-  addAccountReporitoryStub: AddAccountRepository
+  addAccountRepositoryStub: AddAccountRepository
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
 }
 
 const makeSut = (): SutTypes => {
   const hasherStub = mockHasher()
-  const addAccountReporitoryStub = mockAddAccountReporitory()
+  const addAccountRepositoryStub = mockAddAccountRepository()
   const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository()
   jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockResolvedValue(null)
-  const sut = new DbAddAccount(hasherStub, addAccountReporitoryStub, loadAccountByEmailRepositoryStub)
+  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub)
 
-  return { sut, hasherStub, addAccountReporitoryStub, loadAccountByEmailRepositoryStub }
+  return { sut, hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub }
 }
 
 describe('DbAddAccount Usecase', () => {
@@ -43,8 +43,8 @@ describe('DbAddAccount Usecase', () => {
   })
 
   test('Should call AddAccountRepository with correct values', async () => {
-    const { sut, addAccountReporitoryStub } = makeSut()
-    const addSpy = jest.spyOn(addAccountReporitoryStub, 'add')
+    const { sut, addAccountRepositoryStub } = makeSut()
+    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
     const accountData = mockAddAccountParams()
 
     await sut.add(accountData)
@@ -57,8 +57,8 @@ describe('DbAddAccount Usecase', () => {
   })
 
   test('Should throw if AddAccountRepository throws', async () => {
-    const { sut, addAccountReporitoryStub } = makeSut()
-    jest.spyOn(addAccountReporitoryStub, 'add').mockRejectedValueOnce(new Error())
+    const { sut, addAccountRepositoryStub } = makeSut()
+    jest.spyOn(addAccountRepositoryStub, 'add').mockRejectedValueOnce(new Error())
     const accountData = mockAddAccountParams()
 
     const promise = sut.add(accountData)

@@ -7,7 +7,7 @@ import env from '@main/config/env'
 
 export const makeDbLoadAccountByToken = (): LoadAccountByToken => {
   const jwtAdapter = new JwtAdapter(env.jwtSecret)
-  const accountMongoReporitory = new AccountMongoRepository()
+  const accountMongoRepository = new AccountMongoRepository()
 
-  return new DbLoadAccountByToken(jwtAdapter, accountMongoReporitory)
+  return new DbLoadAccountByToken(jwtAdapter, accountMongoRepository)
 }
