@@ -28,13 +28,9 @@ describe('Account MongoDB Repository', () => {
     test('Should return an account on add success', async () => {
       const sut = makeSut()
 
-      const account = await sut.add(mockAddAccountParams())
+      const isValid = await sut.add(mockAddAccountParams())
 
-      expect(account).toBeTruthy()
-      expect(account.id).toBeTruthy()
-      expect(account.name).toBe('any_name')
-      expect(account.email).toBe('any_email@mail.com')
-      expect(account.password).toBe('any_password')
+      expect(isValid).toBeTruthy()
     })
   })
 
@@ -48,7 +44,6 @@ describe('Account MongoDB Repository', () => {
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
-      expect(account.email).toBe('any_email@mail.com')
       expect(account.password).toBe('any_password')
     })
 
