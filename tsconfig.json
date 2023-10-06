@@ -11,6 +11,9 @@
     ],
     "baseUrl": "src",
     "paths": {
+      "@tests/*": [
+        "../tests/*"
+      ],
       "@data/*": [
         "data/*"
       ],
@@ -28,9 +31,6 @@
       ],
       "@validation/*": [
         "validation/*"
-      ],
-      "@tests/*": [
-        "../tests/*"
       ]
     }
   },
