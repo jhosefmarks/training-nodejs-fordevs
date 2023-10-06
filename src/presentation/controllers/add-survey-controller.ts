@@ -16,8 +16,7 @@ export class AddSurveyController implements Controller {
         return badRequest(error)
       }
 
-      const { question, answers } = request
-      await this.addSurvey.add({ question, answers, date: new Date() })
+      await this.addSurvey.add({ ...request, date: new Date() })
 
       return noContent()
     } catch (error) {
