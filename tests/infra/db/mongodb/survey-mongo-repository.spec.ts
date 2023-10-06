@@ -53,6 +53,26 @@ describe('Survey MongoDB Repository', () => {
     })
   })
 
+  describe('loadAnswers()', () => {
+    test('Should load answers on success', async () => {
+      const res = await surveyCollection.insertOne(mockAddSurveyParams())
+      const survey = await surveyCollection.findOne({ _id: res.insertedId })
+
+      const sut = makeSut()
+
+      const answers = await sut.loadAnswers(res.insertedId.toHexString())
+      expect(answers).toEqual([survey.answers[0].answer, survey.answers[1].answer])
+    })
+
+    test('Should return empty array if survey does not exists', async () => {
+      const sut = makeSut()
+
+      const answers = await sut.loadAnswers('123456789012')
+
+      expect(answers).toEqual([])
+    })
+  })
+
   describe('loadAll()', () => {
     test('Should load all surveys on success', async () => {
       const accountId = await mockAccountId()
@@ -96,6 +116,14 @@ describe('Survey MongoDB Repository', () => {
 
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
+    })
+
+    test('Should return null if survey does not exists', async () => {
+      const sut = makeSut()
+
+      const survey = await sut.loadById('123456789012')
+
+      expect(survey).toBeFalsy()
     })
   })
 })
