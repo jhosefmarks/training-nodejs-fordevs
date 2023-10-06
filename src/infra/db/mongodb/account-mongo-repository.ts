@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 
 import {
   AddAccountRepository,
+  CheckAccountByEmailRepository,
   LoadAccountByEmailRepository,
   LoadAccountByTokenRepository,
   UpdateAccessTokenRepository
@@ -9,13 +10,24 @@ import {
 
 import { MongoHelper } from '@infra/db/mongodb'
 
-export class AccountMongoRepository
-implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository,
+UpdateAccessTokenRepository, LoadAccountByTokenRepository, CheckAccountByEmailRepository {
   async add (accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     const accountCollection = MongoHelper.getCollection('accounts')
     const result = await accountCollection.insertOne(accountData)
 
     return !!result.insertedId
+  }
+
+  async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
+    const accountCollection = MongoHelper.getCollection('accounts')
+    const account = await accountCollection.findOne({ email }, {
+      projection: {
+        _id: 1
+      }
+    })
+
+    return account !== null
   }
 
   async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {

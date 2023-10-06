@@ -1,24 +1,23 @@
-import { mockAddAccountRepository, mockHasher, mockLoadAccountByEmailRepository } from '@tests/data/mocks'
+import { mockAddAccountRepository, mockCheckAccountByEmailRepository, mockHasher, mockLoadAccountByEmailRepository } from '@tests/data/mocks'
 import { mockAddAccountParams } from '@tests/domain/mocks'
 
-import { AddAccountRepository, Hasher, LoadAccountByEmailRepository } from '@data/protocols'
+import { AddAccountRepository, CheckAccountByEmailRepository, Hasher, LoadAccountByEmailRepository } from '@data/protocols'
 import { DbAddAccount } from '@data/usecases'
 
 type SutTypes = {
   sut: DbAddAccount
   hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
-  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
+  checkAccountByEmailRepositoryStub: CheckAccountByEmailRepository
 }
 
 const makeSut = (): SutTypes => {
   const hasherStub = mockHasher()
   const addAccountRepositoryStub = mockAddAccountRepository()
-  const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository()
-  jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockResolvedValue(null)
-  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub)
+  const checkAccountByEmailRepositoryStub = mockCheckAccountByEmailRepository()
+  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub, checkAccountByEmailRepositoryStub)
 
-  return { sut, hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub }
+  return { sut, hasherStub, addAccountRepositoryStub, checkAccountByEmailRepositoryStub }
 }
 
 describe('DbAddAccount Usecase', () => {
@@ -74,7 +73,7 @@ describe('DbAddAccount Usecase', () => {
     expect(isValid).toBeTruthy()
   })
 
-  test('Should return false if addAccountRepositoryStub returns false', async () => {
+  test('Should return false if addAccountRepository returns false', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     jest.spyOn(addAccountRepositoryStub, 'add').mockResolvedValueOnce(false)
 
@@ -83,22 +82,18 @@ describe('DbAddAccount Usecase', () => {
     expect(isValid).toBeFalsy()
   })
 
-  test('Should return false if loadAccountByEmailRepositoryStub returns an account', async () => {
-    const { sut, loadAccountByEmailRepositoryStub } = makeSut()
-    jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockResolvedValueOnce({
-      id: 'any_id',
-      name: 'any_name',
-      password: 'any_passoword'
-    })
+  test('Should return false if CheckAccountByEmailRepository returns an account', async () => {
+    const { sut, checkAccountByEmailRepositoryStub } = makeSut()
+    jest.spyOn(checkAccountByEmailRepositoryStub, 'checkByEmail').mockResolvedValueOnce(true)
 
     const account = await sut.add(mockAddAccountParams())
 
     expect(account).toBeFalsy()
   })
 
-  test('Should call LoadAccountByEmailRepository with correct email', async () => {
-    const { sut, loadAccountByEmailRepositoryStub } = makeSut()
-    const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail')
+  test('Should call CheckAccountByEmailRepository with correct email', async () => {
+    const { sut, checkAccountByEmailRepositoryStub } = makeSut()
+    const loadSpy = jest.spyOn(checkAccountByEmailRepositoryStub, 'checkByEmail')
 
     await sut.add(mockAddAccountParams())
 

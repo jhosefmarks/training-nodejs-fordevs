@@ -2,7 +2,8 @@ import {
   LoadAccountByEmailRepository,
   LoadAccountByTokenRepository,
   UpdateAccessTokenRepository,
-  AddAccountRepository
+  AddAccountRepository,
+  CheckAccountByEmailRepository
 } from '@data/protocols'
 
 export const mockAddAccountRepository = (): AddAccountRepository => {
@@ -13,6 +14,16 @@ export const mockAddAccountRepository = (): AddAccountRepository => {
   }
 
   return new AddAccountRepositoryStub()
+}
+
+export const mockCheckAccountByEmailRepository = (): CheckAccountByEmailRepository => {
+  class CheckAccountByEmailRepositoryStub implements CheckAccountByEmailRepository {
+    async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
+      return false
+    }
+  }
+
+  return new CheckAccountByEmailRepositoryStub()
 }
 
 export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
