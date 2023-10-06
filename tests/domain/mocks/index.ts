@@ -1,4 +1,5 @@
 export * from './mock-account'
+export * from './mock-survey-answers'
 export * from './mock-survey-result'
 export * from './mock-survey'
 export * from './test-helpers'
