@@ -1,6 +1,6 @@
 import { LoadAnswersBySurvey } from '@domain/usecases'
 
-import { LoadAnswersBySurveyRepository, LoadSurveyByIdRepository } from '@data/protocols'
+import { LoadAnswersBySurveyRepository } from '@data/protocols'
 
 export class DbLoadAnswersBySurvey implements LoadAnswersBySurvey {
   constructor (private readonly loadAnswersBySurveyRepository: LoadAnswersBySurveyRepository) {}
