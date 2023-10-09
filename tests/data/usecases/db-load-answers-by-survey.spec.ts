@@ -1,4 +1,3 @@
-
 import { mockSurveyAnswers, mockSurveyModel } from '@tests/domain/mocks'
 import { mockLoadAnswersBySurveyRepository } from '@tests/data/mocks'
 
@@ -18,8 +17,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadAnswersBySurvey', () => {
-
-
   test('Should call LoadAnswersBySurveyRepository', async () => {
     const { sut, loadAnswersBySurveyRepositoryStub } = makeSut()
     const loadAnswersSpy = jest.spyOn(loadAnswersBySurveyRepositoryStub, 'loadAnswers')

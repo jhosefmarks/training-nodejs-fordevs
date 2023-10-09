@@ -1,6 +1,8 @@
 .history
 node_modules
 data
+!src/data
+!tests/data
 dist
 coverage
 requirements
