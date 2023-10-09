@@ -1,4 +1,4 @@
-import { SurveyModel, SurveyResultModel } from '@domain/models'
+import { SurveyModel } from '@domain/models'
 import { LoadSurveyResult } from '@domain/usecases'
 
 import { LoadSurveyByIdRepository, LoadSurveyResultRepository } from '@data/protocols'
@@ -9,7 +9,7 @@ export class DbLoadSurveyResult implements LoadSurveyResult {
     private readonly loadSurveyByIdRepository: LoadSurveyByIdRepository
   ) {}
 
-  async load (surveyId: string, accountId: string): Promise<SurveyResultModel> {
+  async load (surveyId: string, accountId: string): Promise<LoadSurveyResult.Result> {
     let surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(surveyId, accountId)
 
     if (!surveyResult) {
@@ -21,7 +21,7 @@ export class DbLoadSurveyResult implements LoadSurveyResult {
     return surveyResult
   }
 
-  private makeEmptyResult (survey: SurveyModel): SurveyResultModel {
+  private makeEmptyResult (survey: SurveyModel): LoadSurveyResult.Result {
     return {
       surveyId: survey.id,
       question: survey.question,
