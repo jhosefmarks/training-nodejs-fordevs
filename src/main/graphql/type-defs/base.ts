@@ -1,4 +1,6 @@
 export const base = `#graphql
+  scalar DateTime
+
   type Query {
     _: String
   }
