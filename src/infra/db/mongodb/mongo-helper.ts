@@ -9,7 +9,7 @@ export const MongoHelper = {
     this.client = await MongoClient.connect(uri)
   },
 
-  async diconnect (): Promise<void> {
+  async disconnect (): Promise<void> {
     await this.client.close()
     this.client = null
   },

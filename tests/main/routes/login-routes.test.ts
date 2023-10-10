@@ -20,7 +20,7 @@ describe('Login Routes', () => {
   })
 
   afterAll(async () => {
-    await MongoHelper.diconnect()
+    await MongoHelper.disconnect()
   })
 
   beforeEach(async () => {

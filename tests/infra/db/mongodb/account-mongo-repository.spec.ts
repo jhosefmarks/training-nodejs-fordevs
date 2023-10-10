@@ -14,7 +14,7 @@ describe('Account MongoDB Repository', () => {
   })
 
   afterAll(async () => {
-    await MongoHelper.diconnect()
+    await MongoHelper.disconnect()
   })
 
   beforeEach(async () => {

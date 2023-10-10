@@ -24,7 +24,7 @@ describe('Survey MongoDB Repository', () => {
   })
 
   afterAll(async () => {
-    await MongoHelper.diconnect()
+    await MongoHelper.disconnect()
   })
 
   beforeEach(async () => {
