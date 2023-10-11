@@ -4,9 +4,7 @@ import env from '@main/config/env'
 
 import { LogMongoRepository, MongoHelper } from '@infra/db/mongodb'
 
-const makeSut = (): LogMongoRepository => {
-  return new LogMongoRepository()
-}
+const makeSut = (): LogMongoRepository => new LogMongoRepository()
 
 describe('Log Mongo Repository', () => {
   let errorCollection: Collection

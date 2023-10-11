@@ -8,6 +8,8 @@ import { MongoHelper , AccountMongoRepository } from '@infra/db/mongodb'
 
 let accountCollection: Collection
 
+const makeSut = (): AccountMongoRepository => new AccountMongoRepository()
+
 describe('Account MongoDB Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -21,8 +23,6 @@ describe('Account MongoDB Repository', () => {
     accountCollection = MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
-
-  const makeSut = (): AccountMongoRepository => new AccountMongoRepository()
 
   describe('add()', () => {
     test('Should return an account on add success', async () => {
