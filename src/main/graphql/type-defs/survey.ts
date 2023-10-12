@@ -1,6 +1,6 @@
 export const survey = `#graphql
   extend type Query {
-    surveys: [Survey!]!
+    surveys: [Survey!]! @auth
   }
 
   type Survey {
